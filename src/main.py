@@ -5,6 +5,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from start_pc import start_pc
 
 from upgrade import upgrade_system
 from shellcomands import shell_comand
@@ -88,18 +89,18 @@ async def estado(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 app = ApplicationBuilder().token(API).build()
 
-app.add_handler(CommandHandler("hello", hello))
+
 app.add_handler(CommandHandler("estado", estado))
 app.add_handler(CommandHandler("instalar", install_package))
 app.add_handler(CommandHandler("desinstalar", uninstall_package))
 app.add_handler(CommandHandler("upgrade", upgrade_system))
 app.add_handler(CommandHandler("shell", shell_comand))
+app.add_handler(CommandHandler("startpc", start_pc))
 
 #TODO Añadir comando mirar uso cpu
 #TODO Añadir comando mirar uso ram
 #TODO Añadir comando mirar uso disco
 #TODO Añadir comando mirar uso reiniciar
 #TODO Añadir comando mirar uso upgradear
-
 
 app.run_polling()
