@@ -1,0 +1,11 @@
+[Unit]
+Description=Servicio bot Telegram
+
+[Service]
+ExecStart=/usr/bin/python3 $RUTA/bot_Telegram/src/main.py
+WorkingDirectory=$RUTA/bot_Telegram/src
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
