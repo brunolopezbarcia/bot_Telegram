@@ -1,7 +1,11 @@
 #!/bin/bash
 
+LOG_FILE = "/var/log/bot_telegram_install.log"
+
+
 function instalar-prereq() {
     apt install boxes -y
+    touch $LOG_FILE
 }
 
 
@@ -12,9 +16,7 @@ function mostrarInicio() {
 function solicitar-datos(){
     read -p "Cual es la API del bot de telegram: " API_BOT_TELEGRAM
     echo $API_BOT_TELEGRAM
-
-    read -p "Cual es la ruta de instalacion: " RUTA_INSTALACION
-
+    RUTA_INSTALACION =  "/opt/"
     read -p "Quieres crear el servicio del bot: [s\n] " CREACION_SERVICIO
 
     echo "Estan los datos correctos:"
@@ -31,7 +33,7 @@ function instalar-bot(){
 
     echo "CLONANDO EL REPOSITORIO"  | boxes
 
-    git clone http://brunolb:Brunito213-@192.168.0.100:3000/CASA/bot_Telegram.git
+    git clone https://github.com/brunolopezbarcia/bot_Telegram.git
 
     echo "ESTABLECIENDO VARIABLES DE ENTORNO" | boxes
     touch bot_Telegram/constants/.env
@@ -55,6 +57,11 @@ function instalar-bot(){
     fi
 }
 
+function actualizar_bot(){
+    echo "Programa de actualizacion del bot"
+}
+
+
 function main() {
     instalar-prereq
     mostrarInicio
@@ -69,7 +76,7 @@ function main() {
 
 
 if [ "$(id -u)" -eq 0 ]; then
-  main
+  main | tee $LOG_FILE
 else
   echo "EL SCRIPT DEBE CORRERSE COMO ROOT" | boxes -d dog -a c
 fi
